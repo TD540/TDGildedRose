@@ -122,8 +122,6 @@ class GildedRoseTests: XCTestCase {
 
 extension Item {
     func assertEqual(to item: Item) {
-        XCTAssertEqual(self.name, item.name)
-        XCTAssertEqual(self.sellIn, item.sellIn)
-        XCTAssertEqual(self.quality, item.quality)
+        XCTAssertEqual(self.description, item.description)
     }
 }
