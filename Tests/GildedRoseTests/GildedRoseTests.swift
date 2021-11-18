@@ -118,10 +118,20 @@ class GildedRoseTests: XCTestCase {
         XCTAssertEqual(app.items[0].quality, 0)
     }
 
+    func testConjuredDegradation() {
+        let app = GildedRose(items: [
+            Item(name: "Conjured Mana Cake", sellIn: 3, quality: 6)
+        ])
+        app.updateQuality()
+        app.items[0].assertEqual(to: Item(name: "Conjured Mana Cake", sellIn: 2, quality: 4))
+    }
+
 }
 
 extension Item {
     func assertEqual(to item: Item) {
-        XCTAssertEqual(self.description, item.description)
+        XCTAssertEqual(self.name, item.name)
+        XCTAssertEqual(self.sellIn, item.sellIn)
+        XCTAssertEqual(self.quality, item.quality)
     }
 }

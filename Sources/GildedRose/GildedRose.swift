@@ -14,73 +14,47 @@ public class GildedRose {
     let agedBrie = "Aged Brie"
     let backstagePasses = "Backstage passes to a TAFKAL80ETC concert"
     let sulfuras = "Sulfuras, Hand of Ragnaros"
+    let conjured = "Conjured Mana Cake"
 
     private func updateItemQuality(item: Item) {
-        // all items except Aged Brie and Backstage passes
-        if (item.name != agedBrie && item.name != backstagePasses) {
+        let degradeAmount = (item.name == conjured) ? 2 : 1
+        let itemDegrades = item.name != agedBrie && item.name != backstagePasses && item.name != sulfuras
 
-            // all items except Sulfuras
-            if (item.name != sulfuras) {
+        if (itemDegrades) {
+            item.degradeQuality(by: degradeAmount)
+        }
 
-                item.degradeQuality()
-            }
-        } else {
+        if (item.name == agedBrie) {
+            item.upgradeQuality()
+        }
 
-            // aged brie or backstage passes
-            // with quality less than 50
-
+        if (item.name == backstagePasses) {
             item.upgradeQuality()
 
-            // backstage passes
-            if (item.name == backstagePasses) {
-
-                // to sell in less than 11 days
-                if (item.sellIn < 11) {
-
-                    // promote quality again!
-                    item.upgradeQuality()
-                }
-
-                // backstage passes
-                if (item.sellIn < 6) {
-
-                    // to sell in less than 6 days
-                    item.upgradeQuality()
-                }
+            if (item.sellIn < 11) {
+                item.upgradeQuality()
+            }
+            if (item.sellIn < 6) {
+                item.upgradeQuality()
             }
         }
 
         // all items except Sulfuras
         if (item.name != sulfuras) {
-
-            // demote sellIn!
+            // decrease sellIn!
             item.sellIn = item.sellIn - 1
         }
 
         // all items where sellIn date passed
         if (item.sellIn < 0) {
-
-            // except aged brie
-            if (item.name != agedBrie) {
-
-                // except backstage passes
-                if (item.name != backstagePasses) {
-
-                    // except sulfuras
-                    if (item.name != sulfuras) {
-
-                        item.degradeQuality()
-                    }
-
-                } else {
-                    // backstage passes - sellIn date passed
-
-                    // Quality drops to 0 after the concert
-                    item.quality = item.quality - item.quality
-                }
-            } else {
-                // aged brie - sellIn date passed
+            if (itemDegrades) {
+                item.degradeQuality(by: degradeAmount)
+            }
+            if (item.name == agedBrie) {
                 item.upgradeQuality()
+            } else if (item.name == backstagePasses) {
+                // Quality drops to 0 after the concert
+                item.quality = item.quality - item.quality
             }
         }
     }
