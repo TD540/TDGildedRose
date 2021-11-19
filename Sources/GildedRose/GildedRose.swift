@@ -18,6 +18,7 @@ public class GildedRose {
     private func update(_ item: Item) {
         let itemDegrades = item.name != agedBrie && item.name != backstagePasses && item.name != sulfuras
         let itemExpired = item.sellIn < 1
+        let itemCanExpire = item.name != sulfuras
 
         var degradeAmount: Int {
             let amount = (item.name == conjured) ? 2 : 1
@@ -34,24 +35,23 @@ public class GildedRose {
         }
 
         if (item.name == backstagePasses) {
-            upgradeQuality(of: item)
-
+            var upgradeAmount = 1
             if (item.sellIn < 11) {
-                upgradeQuality(of: item)
+                upgradeAmount = 2
             }
             if (item.sellIn < 6) {
-                upgradeQuality(of: item)
+                upgradeAmount = 3
             }
+            upgradeQuality(of: item, by: upgradeAmount)
+
             if (itemExpired) {
-                // Quality drops to 0 after the concert
-                item.quality = item.quality - item.quality
+                item.quality = 0
             }
         }
 
-        if (item.name != sulfuras) {
+        if (itemCanExpire) {
             item.sellIn = item.sellIn - 1
         }
-
     }
 
     private func degradeQuality(of item: Item, by amount: Int = 1) {
