@@ -1,12 +1,11 @@
-## Build and test using any of the following
+# My attempt refactoring the [GildedRose Swift Kata](https://github.com/emilybache/GildedRose-Refactoring-Kata)
 
-Command line:
-- `swift test`
+## Steps
 
-Xcode:
-- Open this "swift" folder to open package
-- In the Xcode menu, select Product > Test to run tests
-
-AppCode:
-- Open this "swift" folder to open package
-- Select "GildedRoseTests" configuration and run
+1. document updateQuality spaghetti
+2. add requirement tests according to GildedRoseRequirements.txt
+3. refactor updateQuality method
+4. add ConjuredDegradation test
+5. add ConjuredDegradation logic
+6. group item logic in updateQuality method
+7. increase code readability
